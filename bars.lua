@@ -38,11 +38,16 @@ local hideBlizzardParts = function()
 
 end
 
-local getStandardSize = function()
+local getStandardSize = function(count)
+	
+	count = count or 12
 
-	local width = math.abs(ActionButton1:GetLeft() - ActionButton12:GetRight())
-	local height = ActionButton1:GetHeight()
-	local spacing = select(4, ActionButton12:GetPoint())
+	local start = _G["ActionButton1"]
+	local finish = _G["ActionButton"..count]
+
+	local width = math.abs(start:GetLeft() - finish:GetRight())
+	local height = start:GetHeight()
+	local spacing = select(4, finish:GetPoint())
 
 	return width, height, spacing
 end
@@ -129,6 +134,32 @@ local layoutLeftBar = function(standardWidth, standardHeight, standardSpacing)
 
 end
 
+local layoutStanceBar = function(standardWidth, standardHeight, standardSpacing)
+	
+	local standardWidth, standardHeight, standardSpacing = getStandardSize(10)
+
+	local bar = StanceBarFrame
+
+	bar:ClearAllPoints()
+	bar:SetSize(standardWidth, standardHeight)
+	bar:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, standardSpacing + standardSpacing)
+
+	bar.SetPoint = function() end
+
+	StanceButton1:ClearAllPoints()
+	StanceButton1:SetPoint("LEFT")
+
+	for i = 2, 10 do
+		
+		local button = _G["StanceButton"..i]
+		local anchor, target, targetAnchor, x, y = button:GetPoint()
+
+		button:SetPoint("LEFT", target, "RIGHT", standardSpacing, 0)
+
+	end
+
+end
+
 local layoutBars = function()
 	
 	local standardWidth, standardHeight, standardSpacing = getStandardSize()
@@ -138,6 +169,8 @@ local layoutBars = function()
 
 	layoutBottomLeftBar(standardWidth, standardHeight, standardSpacing)
 	layoutBottomRightBar(standardWidth, standardHeight, standardSpacing)
+
+	layoutStanceBar(standardWidth, standardHeight, standardSpacing)
 
 end
 
@@ -180,7 +213,7 @@ local skinButtons = function()
 		
 		petButton:SetSize(25, 25)
 		stanceButton:SetSize(25, 25)
-				
+
 	end
 
 end
