@@ -38,19 +38,80 @@ local hideBlizzardParts = function()
 
 end
 
-local layoutBars = function()
+local getStandardSize = function()
 
-	local leftButton = ActionButton1
-	local rightButton = ActionButton12
-	local mainBar = MainMenuBar
+	local width = math.abs(ActionButton1:GetLeft() - ActionButton12:GetRight())
+	local height = ActionButton1:GetHeight()
+	local spacing = select(4, ActionButton12:GetPoint())
+
+	return width, height, spacing
+end
+
+local makeHalfBar = function(bar, standardWidth, standardHeight, standardSpacing)
 	
-	local width = math.abs(leftButton:GetLeft() - rightButton:GetRight())
-	local height = leftButton:GetHeight()
+	local barWidth = (standardWidth - standardSpacing) / 2
+	local barHeight = standardHeight + standardHeight + standardSpacing
 
-	mainBar:SetSize(width, height)
+	bar:SetSize(barWidth, barHeight)
+
+	local name = bar:GetName()
+
+	local topButton = _G[name.."Button1"]
+	local baseButton = _G[name.."Button7"]
+
+	topButton:ClearAllPoints()
+	topButton:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+
+	baseButton:ClearAllPoints()
+	baseButton:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+
+end
+
+local layoutMainBar = function(standardWidth, standardHeight, standardSpacing)
+	
+	local leftButton = ActionButton1
+	local mainBar = MainMenuBar
+
+	mainBar:SetSize(standardWidth, standardHeight)
 	mainBar:SetPoint("BOTTOM", 0, 10)
 
 	leftButton:SetPoint("BOTTOMLEFT", 0, 0)
+end 
+
+local layoutBottomLeftBar = function(standardWidth, standardHeight, standardSpacing)
+	
+	local bar = MultiBarBottomLeft
+
+	makeHalfBar(bar, standardWidth, standardHeight, standardSpacing)
+
+	bar:ClearAllPoints()
+	bar:SetPoint("BOTTOMRIGHT", MainMenuBar, "BOTTOMLEFT", -(standardSpacing + standardSpacing), 0)
+
+	bar.SetPoint = function() end
+	
+end
+
+local layoutBottomRightBar = function(standardWidth, standardHeight, standardSpacing)
+
+	local bar = MultiBarBottomRight
+
+	makeHalfBar(bar, standardWidth, standardHeight, standardSpacing)
+
+	bar:ClearAllPoints()
+	bar:SetPoint("BOTTOMLEFT", MainMenuBar, "BOTTOMRIGHT", (standardSpacing + standardSpacing), 0)
+
+	bar.SetPoint = function() end
+	
+end
+
+local layoutBars = function()
+	
+	local standardWidth, standardHeight, standardSpacing = getStandardSize()
+
+	layoutMainBar(standardWidth, standardHeight, standardSpacing)
+
+	layoutBottomLeftBar(standardWidth, standardHeight, standardSpacing)
+	layoutBottomRightBar(standardWidth, standardHeight, standardSpacing)
 
 end
 
