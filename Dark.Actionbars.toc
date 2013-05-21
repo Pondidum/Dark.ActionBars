@@ -1,0 +1,12 @@
+## Interface: 50001
+## Title: Dark.Actionbars
+## Author: Darkend / Singularity / Zenedar / EU
+## Version: 0.0.1
+## Notes: Actionbars
+## RequiredDeps: Dark.Core
+
+init.lua
+
+bars.lua
+
+run.lua
