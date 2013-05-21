@@ -170,10 +170,18 @@ local skinButtons = function()
 
 	end
 
-	-- for i = 1, 10 do
-	-- 	local petButton = _G["PetActionButton" ..i]
-	-- 	style.actionButton(petButton)
-	-- end
+	for i = 1, 10 do
+
+		local petButton = _G["PetActionButton"..i]
+		local stanceButton = _G["StanceButton"..i]
+
+		style.actionButton(petButton)
+		style.actionButton(stanceButton)
+		
+		petButton:SetSize(25, 25)
+		stanceButton:SetSize(25, 25)
+				
+	end
 
 end
 
