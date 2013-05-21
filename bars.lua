@@ -67,17 +67,6 @@ local makeHalfBar = function(bar, standardWidth, standardHeight, standardSpacing
 
 end
 
-local layoutMainBar = function(standardWidth, standardHeight, standardSpacing)
-	
-	local leftButton = ActionButton1
-	local mainBar = MainMenuBar
-
-	mainBar:SetSize(standardWidth, standardHeight)
-	mainBar:SetPoint("BOTTOM", 0, 10)
-
-	leftButton:SetPoint("BOTTOMLEFT", 0, 0)
-end 
-
 local layoutBottomLeftBar = function(standardWidth, standardHeight, standardSpacing)
 	
 	local bar = MultiBarBottomLeft
@@ -104,11 +93,48 @@ local layoutBottomRightBar = function(standardWidth, standardHeight, standardSpa
 	
 end
 
+local layoutMainBar = function(standardWidth, standardHeight, standardSpacing)
+	
+	local leftButton = ActionButton1
+	local mainBar = MainMenuBar
+
+	mainBar:SetSize(standardWidth, standardHeight)
+	mainBar:SetPoint("BOTTOM", 0, 10)
+
+	leftButton:SetPoint("BOTTOMLEFT", 0, 0)
+end 
+
+local layoutLeftBar = function(standardWidth, standardHeight, standardSpacing)
+	
+	local bar = MultiBarLeft
+
+	bar:ClearAllPoints()
+	bar:SetSize(standardWidth, standardHeight)
+	bar:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, standardSpacing)
+	
+	bar.SetPoint = function() end
+
+	MultiBarLeftButton1:ClearAllPoints()
+	MultiBarLeftButton1:SetPoint("BOTTOMLEFT", 0, 0)
+
+	for i = 2, 12 do
+
+		local button = _G["MultiBarLeftButton"..i] 
+		local anchor, target, targetAnchor, x, y = button:GetPoint()
+
+		button:ClearAllPoints()
+		button:SetPoint("LEFT", target, "RIGHT", -y, 0)
+
+	end
+
+end
+
 local layoutBars = function()
 	
 	local standardWidth, standardHeight, standardSpacing = getStandardSize()
 
 	layoutMainBar(standardWidth, standardHeight, standardSpacing)
+	layoutLeftBar(standardWidth, standardHeight, standardSpacing)
 
 	layoutBottomLeftBar(standardWidth, standardHeight, standardSpacing)
 	layoutBottomRightBar(standardWidth, standardHeight, standardSpacing)
