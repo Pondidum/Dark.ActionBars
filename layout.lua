@@ -1,90 +1,79 @@
 local addon, ns = ...
+local settings = ns.settings
 
-
-local getStandardSize = function(count)
+local sizeBar = function(bar, cols, rows, buttonName)
 	
-	count = count or 12
-
-	local start = _G["ActionButton1"]
-	local finish = _G["ActionButton"..count]
-
-	local width = math.abs(start:GetLeft() - finish:GetRight())
-	local height = start:GetHeight()
-	local spacing = select(4, finish:GetPoint())
-
-	return width, height, spacing
-end
-
-local makeHalfBar = function(bar, standardWidth, standardHeight, standardSpacing)
-	
-	local barWidth = (standardWidth - standardSpacing) / 2
-	local barHeight = standardHeight + standardHeight + standardSpacing
+	local barWidth = ((settings.buttonSize + settings.spacing) * cols) - settings.spacing
+	local barHeight = ((settings.buttonSize + settings.spacing) * rows) - settings.spacing
 
 	bar:SetSize(barWidth, barHeight)
 
 	local name = bar:GetName()
 
-	local topButton = _G[name.."Button1"]
-	local baseButton = _G[name.."Button7"]
+	local topButton = _G[buttonName.."1"]
 
 	topButton:ClearAllPoints()
 	topButton:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
+	
+	local prev = topButton
 
-	baseButton:ClearAllPoints()
-	baseButton:SetPoint("BOTTOMLEFT", bar, "BOTTOMLEFT", 0, 0)
+	for i = 1, rows - 1 do
+
+		local index = (i * cols) + 1
+		local button = _G[buttonName..index]
+
+		button:ClearAllPoints()
+		button:SetPoint("TOPLEFT", prev, "BOTTOMLEFT", 0, -settings.spacing)
+
+		prev = button
+
+	end
 
 end
 
-local layoutBottomLeftBar = function(standardWidth, standardHeight, standardSpacing)
+local locateBar = function(bar, ...)
+	
+	bar:ClearAllPoints()
+	bar:SetPoint(...)
+
+	bar.SetPoint = function() end
+
+end
+
+local layoutBottomLeftBar = function()
 	
 	local bar = MultiBarBottomLeft
 
-	makeHalfBar(bar, standardWidth, standardHeight, standardSpacing)
+	sizeBar(bar, 6, 2, "MultiBarBottomLeftButton")
+	locateBar(bar, "BOTTOMRIGHT", MainMenuBar, "BOTTOMLEFT", -(settings.spacing + settings.spacing), 0)
 
-	bar:ClearAllPoints()
-	bar:SetPoint("BOTTOMRIGHT", MainMenuBar, "BOTTOMLEFT", -(standardSpacing + standardSpacing), 0)
-
-	bar.SetPoint = function() end
-	
 end
 
-local layoutBottomRightBar = function(standardWidth, standardHeight, standardSpacing)
+local layoutBottomRightBar = function()
 
 	local bar = MultiBarBottomRight
 
-	makeHalfBar(bar, standardWidth, standardHeight, standardSpacing)
+	sizeBar(bar, 6, 2, "MultiBarBottomRightButton")
+	locateBar(bar, "BOTTOMLEFT", MainMenuBar, "BOTTOMRIGHT", (settings.spacing + settings.spacing), 0)
 
-	bar:ClearAllPoints()
-	bar:SetPoint("BOTTOMLEFT", MainMenuBar, "BOTTOMRIGHT", (standardSpacing + standardSpacing), 0)
-
-	bar.SetPoint = function() end
-	
 end
 
-local layoutMainBar = function(standardWidth, standardHeight, standardSpacing)
+local layoutMainBar = function()
 	
-	local leftButton = ActionButton1
-	local mainBar = MainMenuBar
+	local bar = MainMenuBar
 
-	mainBar:SetSize(standardWidth, standardHeight)
-	mainBar:SetPoint("BOTTOM", 0, 10)
+	sizeBar(bar, 12, 1, "ActionButton")
+	locateBar(bar, "BOTTOM", 0, 10)
 
-	leftButton:SetPoint("BOTTOMLEFT", 0, 0)
 end 
 
-local layoutLeftBar = function(standardWidth, standardHeight, standardSpacing)
+local layoutLeftBar = function()
 	
 	local bar = MultiBarLeft
 
-	bar:ClearAllPoints()
-	bar:SetSize(standardWidth, standardHeight)
-	bar:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, standardSpacing)
+	sizeBar(bar, 12, 1, "MultiBarLeftButton")
+	locateBar(bar, "BOTTOM", MainMenuBar, "TOP", 0, settings.spacing)
 	
-	bar.SetPoint = function() end
-
-	MultiBarLeftButton1:ClearAllPoints()
-	MultiBarLeftButton1:SetPoint("BOTTOMLEFT", 0, 0)
-
 	for i = 2, 12 do
 
 		local button = _G["MultiBarLeftButton"..i] 
@@ -97,43 +86,33 @@ local layoutLeftBar = function(standardWidth, standardHeight, standardSpacing)
 
 end
 
-local layoutStanceBar = function(standardWidth, standardHeight, standardSpacing)
-	
-	local standardWidth, standardHeight, standardSpacing = getStandardSize(10)
+local layoutStanceBar = function()
 
 	local bar = StanceBarFrame
 
-	bar:ClearAllPoints()
-	bar:SetSize(standardWidth, standardHeight)
-	bar:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, standardSpacing + standardSpacing)
-
-	bar.SetPoint = function() end
-
-	StanceButton1:ClearAllPoints()
-	StanceButton1:SetPoint("LEFT")
+	sizeBar(bar, 10, 1, "StanceButton")
+	locateBar(bar, "BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, settings.spacing + settings.spacing)
 
 	for i = 2, 10 do
 		
 		local button = _G["StanceButton"..i]
 		local anchor, target, targetAnchor, x, y = button:GetPoint()
 
-		button:SetPoint("LEFT", target, "RIGHT", standardSpacing, 0)
+		button:SetPoint("LEFT", target, "RIGHT", settings.spacing, 0)
 
 	end
 
 end
 
 local layoutBars = function()
-	
-	local standardWidth, standardHeight, standardSpacing = getStandardSize()
 
-	layoutMainBar(standardWidth, standardHeight, standardSpacing)
-	layoutLeftBar(standardWidth, standardHeight, standardSpacing)
+	layoutMainBar()
+	layoutLeftBar()
 
-	layoutBottomLeftBar(standardWidth, standardHeight, standardSpacing)
-	layoutBottomRightBar(standardWidth, standardHeight, standardSpacing)
+	layoutBottomLeftBar()
+	layoutBottomRightBar()
 
-	layoutStanceBar(standardWidth, standardHeight, standardSpacing)
+	layoutStanceBar()
 
 end
 
