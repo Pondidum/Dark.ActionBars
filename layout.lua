@@ -86,6 +86,15 @@ local layoutLeftBar = function()
 
 end
 
+local layoutRightBar = function()
+	
+	local bar = MultiBarRight
+
+	sizeBar(bar, 1, 12, "MultiBarRightButton")
+	locateBar(bar, "RIGHT", UIParent, "RIGHT", -settings.spacing, 0)
+	
+end
+
 local layoutStanceBar = function()
 
 	local bar = StanceBarFrame
@@ -127,6 +136,7 @@ local layoutBars = function()
 
 	layoutMainBar()
 	layoutLeftBar()
+	layoutRightBar()
 
 	layoutBottomLeftBar()
 	layoutBottomRightBar()
