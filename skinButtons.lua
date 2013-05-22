@@ -1,49 +1,41 @@
 local addon, ns = ...
+
+local settings = ns.settings
+
 local core = Dark.core
 local style = core.style
 
-local skinButtons = function()
+local skinButton = function(buttonName)
+
+	local button = _G[buttonName]
+
+	style.actionButton(button)
+
+	button:SetSize(settings.buttonSize, settings.buttonSize)
+	button:SetAttribute("showgrid", 1)
+	button:Show()
+
+end
+
+local skinAllButtons = function()
 	
 	for i = 1, 12 do
 
-
-		local button = _G["ActionButton" ..i]
-		local bottomLeftButton = _G["MultiBarBottomLeftButton"..i]
-		local bottomRightButton = _G["MultiBarBottomRightButton"..i]
-		local rightButton = _G["MultiBarRightButton"..i]
-		local leftButton = _G["MultiBarLeftButton"..i]
-		
-		style.actionButton(button)
-		style.actionButton(bottomLeftButton)
-		style.actionButton(bottomRightButton)
-		style.actionButton(rightButton)
-		style.actionButton(leftButton)
-
-		button:SetSize(25, 25)
-		bottomLeftButton:SetSize(25, 25)
-		bottomRightButton:SetSize(25, 25)
-		rightButton:SetSize(25, 25)
-		leftButton:SetSize(25, 25)
-
-		--prevent this set of buttons from autohiding
-		button:SetAttribute("showgrid", 1)
-		button:Show()
+		skinButton("ActionButton" ..i)
+		skinButton("MultiBarBottomLeftButton"..i)
+		skinButton("MultiBarBottomRightButton"..i)
+		skinButton("MultiBarRightButton"..i)
+		skinButton("MultiBarLeftButton"..i)
 
 	end
 
 	for i = 1, 10 do
 
-		local petButton = _G["PetActionButton"..i]
-		local stanceButton = _G["StanceButton"..i]
-
-		style.actionButton(petButton)
-		style.actionButton(stanceButton)
-		
-		petButton:SetSize(25, 25)
-		stanceButton:SetSize(25, 25)
+		skinButton("PetActionButton"..i)
+		skinButton("StanceButton"..i)
 
 	end
 
 end
 
-ns.skinButtons = skinButtons
+ns.skinButtons = skinAllButtons
