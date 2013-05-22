@@ -104,6 +104,25 @@ local layoutStanceBar = function()
 
 end
 
+local layoutPetBar = function()
+	
+	local bar = PetActionBarFrame
+
+	sizeBar(bar, 10, 1, "PetActionButton")
+	locateBar(bar, "BOTTOM", MultiBarLeft, "TOP", 0, settings.spacing + settings.spacing)
+	
+	for i = 2, 10 do
+
+		local button = _G["PetActionButton"..i] 
+		local anchor, target, targetAnchor, x, y = button:GetPoint()
+
+		button:ClearAllPoints()
+		button:SetPoint("LEFT", target, "RIGHT", settings.spacing, 0)
+
+	end
+
+end
+
 local layoutBars = function()
 
 	layoutMainBar()
@@ -113,6 +132,7 @@ local layoutBars = function()
 	layoutBottomRightBar()
 
 	layoutStanceBar()
+	layoutPetBar()
 
 end
 
