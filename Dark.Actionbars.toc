@@ -5,6 +5,7 @@
 ## Notes: Actionbars
 ## RequiredDeps: Dark.Core
 
+settings.lua
 init.lua
 
 hideBlizzard.lua
