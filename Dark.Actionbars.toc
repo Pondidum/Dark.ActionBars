@@ -6,7 +6,7 @@
 ## RequiredDeps: Dark.Core
 
 settings.lua
-init.lua
+initialise.lua
 
 hideBlizzard.lua
 layout.lua
