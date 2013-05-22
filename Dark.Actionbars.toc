@@ -7,6 +7,8 @@
 
 init.lua
 
-bars.lua
+hideBlizzard.lua
+layout.lua
+skinButtons.lua
 
 run.lua
