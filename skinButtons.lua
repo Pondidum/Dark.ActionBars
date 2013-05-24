@@ -31,7 +31,7 @@ end
 
 local skinAllButtons = function()
 	
-	for i = 1, 12 do
+	for i = 1, NUM_ACTIONBAR_BUTTONS do
 
 		skinActionButton("ActionButton" ..i)
 		skinActionButton("MultiBarBottomLeftButton"..i)
