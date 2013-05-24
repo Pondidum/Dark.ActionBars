@@ -62,8 +62,8 @@ local layoutMainBar = function()
 	
 	local bar = MainMenuBar
 
-	sizeBar(bar, 12, 1, "ActionButton")
-	locateBar(bar, "BOTTOM", 0, 10)
+	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "ActionButton")
+	locateBar(bar, "BOTTOM", 0, settings.screenPadding)
 
 end 
 
@@ -71,10 +71,10 @@ local layoutLeftBar = function()
 	
 	local bar = MultiBarLeft
 
-	sizeBar(bar, 12, 1, "MultiBarLeftButton")
+	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "MultiBarLeftButton")
 	locateBar(bar, "BOTTOM", MainMenuBar, "TOP", 0, settings.spacing)
 	
-	for i = 2, 12 do
+	for i = 2, NUM_ACTIONBAR_BUTTONS do
 
 		local button = _G["MultiBarLeftButton"..i] 
 		local anchor, target, targetAnchor, x, y = button:GetPoint()
@@ -90,8 +90,8 @@ local layoutRightBar = function()
 	
 	local bar = MultiBarRight
 
-	sizeBar(bar, 1, 12, "MultiBarRightButton")
-	locateBar(bar, "RIGHT", UIParent, "RIGHT", -settings.spacing, 0)
+	sizeBar(bar, 1, NUM_ACTIONBAR_BUTTONS, "MultiBarRightButton")
+	locateBar(bar, "RIGHT", UIParent, "RIGHT", -settings.screenPadding, 0)
 	
 end
 
@@ -99,10 +99,10 @@ local layoutStanceBar = function()
 
 	local bar = StanceBarFrame
 
-	sizeBar(bar, 10, 1, "StanceButton")
+	sizeBar(bar, NUM_STANCE_SLOTS, 1, "StanceButton")
 	locateBar(bar, "BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, settings.spacing + settings.spacing)
 
-	for i = 2, 10 do
+	for i = 2, NUM_STANCE_SLOTS do
 		
 		local button = _G["StanceButton"..i]
 		local anchor, target, targetAnchor, x, y = button:GetPoint()
@@ -117,10 +117,10 @@ local layoutPetBar = function()
 	
 	local bar = PetActionBarFrame
 
-	sizeBar(bar, 10, 1, "PetActionButton")
+	sizeBar(bar, NUM_PET_ACTION_SLOTS, 1, "PetActionButton")
 	locateBar(bar, "BOTTOM", MultiBarLeft, "TOP", 0, settings.spacing + settings.spacing)
 	
-	for i = 2, 10 do
+	for i = 2, NUM_PET_ACTION_SLOTS do
 
 		local button = _G["PetActionButton"..i] 
 		local anchor, target, targetAnchor, x, y = button:GetPoint()
