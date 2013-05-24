@@ -4,8 +4,9 @@ local settings = ns.settings
 
 local core = Dark.core
 local style = core.style
+local colors = core.colors
 
-local skinButton = function(buttonName)
+local skinActionButton = function(buttonName)
 
 	local button = _G[buttonName]
 
@@ -17,25 +18,54 @@ local skinButton = function(buttonName)
 
 end
 
+local skinPetButton = function(buttonName)
+	
+	local button = _G[buttonName]
+
+	style.petActionButton(button)
+
+	button:SetSize(settings.buttonSize, settings.buttonSize)
+	button:Show()
+
+end
+
 local skinAllButtons = function()
 	
 	for i = 1, 12 do
 
-		skinButton("ActionButton" ..i)
-		skinButton("MultiBarBottomLeftButton"..i)
-		skinButton("MultiBarBottomRightButton"..i)
-		skinButton("MultiBarRightButton"..i)
-		skinButton("MultiBarLeftButton"..i)
+		skinActionButton("ActionButton" ..i)
+		skinActionButton("MultiBarBottomLeftButton"..i)
+		skinActionButton("MultiBarBottomRightButton"..i)
+		skinActionButton("MultiBarRightButton"..i)
+		skinActionButton("MultiBarLeftButton"..i)
 
 	end
 
-	for i = 1, 10 do
+	for i = 1, NUM_PET_ACTION_SLOTS do
 
-		skinButton("PetActionButton"..i)
-		skinButton("StanceButton"..i)
+		skinPetButton("PetActionButton"..i)
+		skinActionButton("StanceButton"..i)
 
 	end
 
+	local onPetBarUpdate = function()
+
+		for i = 1, NUM_PET_ACTION_SLOTS  do
+
+			local button = _G["PetActionButton"..i]
+			local name, subtext, texture, isToken, isActive, autoCastable, autoCastEnabled = GetPetActionInfo(i)
+
+			if autoCastable then
+				button.shadow:SetBackdropBorderColor(unpack(colors.reaction[4]))  --use neutral color
+			else
+				button.shadow:SetBackdropBorderColor(unpack(colors.shadow))
+			end
+
+		end
+
+	end
+
+	hooksecurefunc("PetActionBar_Update", onPetBarUpdate)
 end
 
 ns.skinButtons = skinAllButtons
