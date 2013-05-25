@@ -19,6 +19,9 @@ local hideBlizzardParts = function()
 
 	MainMenuExpBar:Hide()
 	MainMenuBarMaxLevelBar:Hide()
+
+	ReputationWatchBar:Hide()
+
 	ActionBarUpButton:Hide()
 	ActionBarDownButton:Hide()
 
