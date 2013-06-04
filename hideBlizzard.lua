@@ -21,12 +21,20 @@ local hideBlizzardParts = function()
 	MainMenuBarMaxLevelBar:Hide()
 
 	ReputationWatchBar:Hide()
+	ReputationWatchStatusBar:Hide()
 
 	ActionBarUpButton:Hide()
 	ActionBarDownButton:Hide()
 
+	
+
 	for i , v in ipairs(MICRO_BUTTONS) do
-	  _G[v]:Hide()
+
+		local button = _G[v]
+
+		button:UnregisterAllEvents()
+	  	button:Hide()
+	  	
 	end
 
 	for i = 0, 3 do
