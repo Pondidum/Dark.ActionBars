@@ -36,7 +36,7 @@ local locateBar = function(bar, ...)
 	bar:ClearAllPoints()
 	bar:SetPoint(...)
 
-	bar.SetPoint = function() end
+	UIPARENT_MANAGED_FRAME_POSITIONS[bar:GetName()] = nil
 
 end
 
@@ -80,8 +80,8 @@ local layoutLeftBar = function()
 		local anchor, target, targetAnchor, x, y = button:GetPoint()
 
 		button:ClearAllPoints()
-		button:SetPoint("LEFT", target, "RIGHT", -y, 0)
-
+		button:SetPoint("LEFT", target, "RIGHT", settings.spacing, 0)
+		
 	end
 
 end
@@ -117,9 +117,10 @@ local layoutPetBar = function()
 	
 	local bar = PetActionBarFrame
 
-	sizeBar(bar, NUM_PET_ACTION_SLOTS, 1, "PetActionButton")
-	locateBar(bar, "BOTTOM", MultiBarLeft, "TOP", 0, settings.spacing + settings.spacing)
+	-- sizeBar(bar, NUM_PET_ACTION_SLOTS, 1, "PetActionButton")
+	-- locateBar(bar, "BOTTOM", MultiBarLeft, "TOP", 0, settings.spacing + settings.spacing)
 	
+	PetActionButton1:SetPoint("BOTTOMLEFT", MultiBarLeft, "TOPLEFT", 0, settings.spacing + settings.spacing)
 	for i = 2, NUM_PET_ACTION_SLOTS do
 
 		local button = _G["PetActionButton"..i] 
