@@ -1,6 +1,6 @@
 ## Interface: 50001
 ## Title: Dark.Actionbars
-## Author: Darkend / Singularity / Zenedar / EU
+## Author: Darkend / DarkStorm / Zenedar / EU
 ## Version: 0.0.1
 ## Notes: Actionbars
 ## RequiredDeps: Dark.Core
