@@ -25,6 +25,7 @@ local hideBlizzardParts = function()
 	MainMenuExpBar:Hide()
 	MainMenuBarMaxLevelBar:Hide()
 	MainMenuBarMaxLevelBar:UnregisterAllEvents()
+	MainMenuBarMaxLevelBar.Show = function() end
 
 	ReputationWatchBar:Hide()
 	ReputationWatchStatusBar:Hide()
