@@ -14,11 +14,17 @@ local hideTextures = function(frame)
 end
 
 local hideBlizzardParts = function()
+	
+	--silly blizzard call this sometimes, even though it doesn't exist.
+	if not AchievementMicroButton_Update then
+		AchievementMicroButton_Update = function() end
+	end
 
 	hideTextures(MainMenuBarArtFrame)
 
 	MainMenuExpBar:Hide()
 	MainMenuBarMaxLevelBar:Hide()
+	MainMenuBarMaxLevelBar:UnregisterAllEvents()
 
 	ReputationWatchBar:Hide()
 	ReputationWatchStatusBar:Hide()
