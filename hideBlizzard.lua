@@ -21,6 +21,7 @@ local hideBlizzardParts = function()
 	end
 
 	hideTextures(MainMenuBarArtFrame)
+	hideTextures(OverrideActionBar)
 
 	MainMenuExpBar:Hide()
 	MainMenuBarMaxLevelBar:Hide()
@@ -33,7 +34,10 @@ local hideBlizzardParts = function()
 	ActionBarUpButton:Hide()
 	ActionBarDownButton:Hide()
 
-	
+	OverrideActionBarHealthBar:Hide()
+	OverrideActionBarExpBar:Hide()
+	OverrideActionBarPowerBar:Hide()
+	OverrideActionBarLeaveFrameDivider3:Hide()
 
 	for i , v in ipairs(MICRO_BUTTONS) do
 
@@ -43,6 +47,10 @@ local hideBlizzardParts = function()
 	  	button:Hide()
 	  	
 	end
+
+
+	HelpMicroButton:UnregisterAllEvents()
+	HelpMicroButton:Hide()
 
 	for i = 0, 3 do
 	  _G["CharacterBag"..i.."Slot"]:Hide()
