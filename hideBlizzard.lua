@@ -15,9 +15,10 @@ end
 
 local hideBlizzardParts = function()
 	
+	local fake = function() end
 	--silly blizzard call this sometimes, even though it doesn't exist.
 	if not AchievementMicroButton_Update then
-		AchievementMicroButton_Update = function() end
+		AchievementMicroButton_Update = fake
 	end
 
 	hideTextures(MainMenuBarArtFrame)
@@ -26,7 +27,7 @@ local hideBlizzardParts = function()
 	MainMenuExpBar:Hide()
 	MainMenuBarMaxLevelBar:Hide()
 	MainMenuBarMaxLevelBar:UnregisterAllEvents()
-	MainMenuBarMaxLevelBar.Show = function() end
+	MainMenuBarMaxLevelBar.Show = fake
 
 	ReputationWatchBar:Hide()
 	ReputationWatchStatusBar:Hide()
@@ -48,7 +49,7 @@ local hideBlizzardParts = function()
 	  	
 	end
 
-	--HelpMicroButton.Show = function() end
+	UpdateMicroButtons = fake
 	
 
 	for i = 0, 3 do
