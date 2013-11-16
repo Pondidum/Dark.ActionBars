@@ -48,9 +48,7 @@ local hideBlizzardParts = function()
 	  	
 	end
 
-
-	HelpMicroButton:UnregisterAllEvents()
-	HelpMicroButton:Hide()
+	HelpMicroButton.Show = function() end
 
 	for i = 0, 3 do
 	  _G["CharacterBag"..i.."Slot"]:Hide()
