@@ -49,7 +49,7 @@ local hideBlizzardParts = function()
 	  	
 	end
 
-	UpdateMicroButtons = fake
+	--UpdateMicroButtons = fake
 	
 
 	for i = 0, 3 do
