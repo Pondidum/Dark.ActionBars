@@ -51,6 +51,12 @@ local skinAllButtons = function()
 
 	end
 
+	for i = 1, NUM_OVERRIDE_BUTTONS do
+		skinActionButton("OverrideActionBarButton"..i)
+	end
+
+	--skinActionButton("OverrideActionBarLeaveFrameLeaveButton")
+
 	for i = 1, GetNumFlyouts() do 
 
 		local id = GetFlyoutID(i)
