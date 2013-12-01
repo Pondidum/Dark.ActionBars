@@ -1,7 +1,7 @@
 local addon, ns = ...
 local settings = ns.settings
 
-local sizeBar = function(bar, cols, rows, buttonName)
+local sizeBar = function(bar, cols, rows, buttonFormat)
 	
 	local barWidth = ((settings.buttonSize + settings.spacing) * cols) - settings.spacing
 	local barHeight = ((settings.buttonSize + settings.spacing) * rows) - settings.spacing
@@ -10,7 +10,7 @@ local sizeBar = function(bar, cols, rows, buttonName)
 
 	local name = bar:GetName()
 
-	local topButton = _G[buttonName.."1"]
+	local topButton = _G[string.format(buttonFormat, "1")]
 
 	topButton:ClearAllPoints()
 	topButton:SetPoint("TOPLEFT", bar, "TOPLEFT", 0, 0)
@@ -20,7 +20,7 @@ local sizeBar = function(bar, cols, rows, buttonName)
 	for i = 1, rows - 1 do
 
 		local index = (i * cols) + 1
-		local button = _G[buttonName..index]
+		local button = _G[string.format(buttonFormat, index)]
 
 		button:ClearAllPoints()
 		button:SetPoint("TOPLEFT", prev, "BOTTOMLEFT", 0, -settings.spacing)
@@ -44,7 +44,7 @@ local layoutBottomLeftBar = function()
 	
 	local bar = MultiBarBottomLeft
 
-	sizeBar(bar, 6, 2, "MultiBarBottomLeftButton")
+	sizeBar(bar, 6, 2, "MultiBarBottomLeftButton%s")
 	locateBar(bar, "BOTTOMRIGHT", MainMenuBar, "BOTTOMLEFT", -(settings.spacing + settings.spacing), 0)
 
 end
@@ -53,7 +53,7 @@ local layoutBottomRightBar = function()
 
 	local bar = MultiBarBottomRight
 
-	sizeBar(bar, 6, 2, "MultiBarBottomRightButton")
+	sizeBar(bar, 6, 2, "MultiBarBottomRightButton%s")
 	locateBar(bar, "BOTTOMLEFT", MainMenuBar, "BOTTOMRIGHT", (settings.spacing + settings.spacing), 0)
 
 end
@@ -62,7 +62,7 @@ local layoutMainBar = function()
 	
 	local bar = MainMenuBar
 
-	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "ActionButton")
+	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "ActionButton%s")
 	locateBar(bar, "BOTTOM", 0, settings.screenPadding)
 
 end 
@@ -71,7 +71,7 @@ local layoutLeftBar = function()
 	
 	local bar = MultiBarLeft
 
-	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "MultiBarLeftButton")
+	sizeBar(bar, NUM_ACTIONBAR_BUTTONS, 1, "MultiBarLeftButton%s")
 	locateBar(bar, "BOTTOM", MainMenuBar, "TOP", 0, settings.spacing)
 	
 	for i = 2, NUM_ACTIONBAR_BUTTONS do
@@ -90,7 +90,7 @@ local layoutRightBar = function()
 	
 	local bar = MultiBarRight
 
-	sizeBar(bar, 1, NUM_ACTIONBAR_BUTTONS, "MultiBarRightButton")
+	sizeBar(bar, 1, NUM_ACTIONBAR_BUTTONS, "MultiBarRightButton%s")
 	locateBar(bar, "RIGHT", UIParent, "RIGHT", -settings.screenPadding, 0)
 	
 end
@@ -99,7 +99,7 @@ local layoutStanceBar = function()
 
 	local bar = StanceBarFrame
 
-	sizeBar(bar, NUM_STANCE_SLOTS, 1, "StanceButton")
+	sizeBar(bar, NUM_STANCE_SLOTS, 1, "StanceButton%s")
 	locateBar(bar, "BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, settings.spacing + settings.spacing)
 
 	for i = 2, NUM_STANCE_SLOTS do
@@ -117,7 +117,7 @@ local layoutPetBar = function()
 	
 	local bar = PetActionBarFrame
 
-	-- sizeBar(bar, NUM_PET_ACTION_SLOTS, 1, "PetActionButton")
+	-- sizeBar(bar, NUM_PET_ACTION_SLOTS, 1, "PetActionButton%s")
 	-- locateBar(bar, "BOTTOM", MultiBarLeft, "TOP", 0, settings.spacing + settings.spacing)
 	
 	PetActionButton1:SetPoint("BOTTOMLEFT", MultiBarLeft, "TOPLEFT", 0, settings.spacing + settings.spacing)
