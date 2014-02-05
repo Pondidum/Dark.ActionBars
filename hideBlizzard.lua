@@ -4,7 +4,7 @@ local hideTextures = function(frame)
 
 	local count = frame:GetNumRegions()
 
-	for i = 1, count do 
+	for i = 1, count do
 
 		local region = select(i, frame:GetRegions())
 		region:Hide()
@@ -14,7 +14,7 @@ local hideTextures = function(frame)
 end
 
 local hideBlizzardParts = function()
-	
+
 	local fake = function() end
 	--silly blizzard call this sometimes, even though it doesn't exist.
 	if not AchievementMicroButton_Update then
@@ -46,11 +46,11 @@ local hideBlizzardParts = function()
 
 		button:UnregisterAllEvents()
 	  	button:Hide()
-	  	
+
 	end
 
 	--UpdateMicroButtons = fake
-	
+
 
 	for i = 0, 3 do
 	  _G["CharacterBag"..i.."Slot"]:Hide()
