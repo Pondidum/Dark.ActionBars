@@ -44,13 +44,11 @@ local hideBlizzardParts = function()
 
 		local button = _G[v]
 
+		button:SetSize(0,0)
 		button:UnregisterAllEvents()
 	  	button:Hide()
 
 	end
-
-	--UpdateMicroButtons = fake
-
 
 	for i = 0, 3 do
 	  _G["CharacterBag"..i.."Slot"]:Hide()
