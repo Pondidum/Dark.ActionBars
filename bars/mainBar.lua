@@ -3,7 +3,7 @@ local addon, ns = ...
 local settings = ns.settings
 local bar = ns.bar
 
-local mainBar = bar:new({
+bar:new({
 
 	name = "Main",
 	bar = MainMenuBar,
