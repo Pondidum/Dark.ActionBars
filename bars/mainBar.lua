@@ -19,5 +19,4 @@ bar:new({
 		end
 
 	end,
-
 })
