@@ -46,15 +46,11 @@ local hideBlizzardParts = function()
 
 		button:SetSize(0,0)
 		button:UnregisterAllEvents()
-	  	button:Hide()
+		button:Hide()
+
+		button:SetNormalTexture("")
 
 	end
-
-	for i = 0, 3 do
-	  _G["CharacterBag"..i.."Slot"]:Hide()
-	end
-
-	MainMenuBarBackpackButton:Hide()
 
 end
 
