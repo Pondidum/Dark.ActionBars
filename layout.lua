@@ -135,32 +135,17 @@ end
 
 local layoutBagBar = function()
 	
-	local fixButton = function(button)
-		
-		button:Show()
-		button:SetSize(settings.buttonSize, settings.buttonSize)
-
-		local icon = _G[button:GetName().."IconTexture"]
-		icon:SetTexCoord(.08, .92, .08, .92)
-		icon:ClearAllPoints()
-		icon:SetAllPoints(button)
-
-	end
-
 	local bar = CreateFrame("Frame", "DarkBagBar", UIParent)
 	sizeBar(bar, NUM_BAG_FRAMES+1, 1, "MainMenuBarBackpackButton")
 	locateBar(bar, "BOTTOMRIGHT", UIParent, -settings.screenPadding, settings.screenPadding)
 	
 	local prev = _G["MainMenuBarBackpackButton"]
 	prev:SetParent(bar)
-	fixButton(prev)
 
 	for i = 0, NUM_BAG_FRAMES - 1 do
 
 		local b = _G["CharacterBag"..i.."Slot"]
 		b:SetParent(bar)
-
-		fixButton(b)
 
 		b:ClearAllPoints()
 		b:SetPoint("LEFT", prev, "RIGHT", settings.spacing, 0)

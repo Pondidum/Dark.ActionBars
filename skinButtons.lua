@@ -19,7 +19,7 @@ local skinActionButton = function(buttonName)
 end
 
 local skinPetButton = function(buttonName)
-	
+
 	local button = _G[buttonName]
 
 	style.petActionButton(button)
@@ -28,12 +28,19 @@ local skinPetButton = function(buttonName)
 
 end
 
-local skinFlyout = function(flyout)
+local skinBagButton = function(buttonName)
+
+	local button = _G[buttonName]
+
+	style.itemButton(button)
+
+	button:SetSize(settings.buttonSize, settings.buttonSize)
+	button:Show()
 
 end
 
 local skinAllButtons = function()
-	
+
 	for i = 1, NUM_ACTIONBAR_BUTTONS do
 
 		skinActionButton("ActionButton" ..i)
@@ -52,15 +59,15 @@ local skinAllButtons = function()
 	end
 
 	for i = 1, NUM_OVERRIDE_BUTTONS do
+
 		skinActionButton("OverrideActionBarButton"..i)
+
 	end
 
-	--skinActionButton("OverrideActionBarLeaveFrameLeaveButton")
+	skinBagButton("MainMenuBarBackpackButton")
+	for i = 0, NUM_BAG_FRAMES - 1 do
 
-	for i = 1, GetNumFlyouts() do 
-
-		local id = GetFlyoutID(i)
-		local name, description, numSlots, isKnown = GetFlyoutInfo(id)
+		skinBagButton("CharacterBag"..i.."Slot")
 
 	end
 
@@ -84,22 +91,22 @@ local skinAllButtons = function()
 	hooksecurefunc("ActionButton_UpdateFlyout", function(self)
 
 		if not self.FlyoutArrow then return end
-		
+
 		self.FlyoutBorder:SetAlpha(0)
 		self.FlyoutBorderShadow:SetAlpha(0)
 
-	
+
 		SpellFlyoutHorizontalBackground:SetAlpha(0)
 		SpellFlyoutVerticalBackground:SetAlpha(0)
 		SpellFlyoutBackgroundEnd:SetAlpha(0)
-	
+
 	end)
 
 	SpellFlyout:HookScript("OnShow", function(self)
 
 		local count = self:GetNumChildren()
 
-		for i = 1, count  do 
+		for i = 1, count  do
 
 			local button = select(i, self:GetChildren())
 
