@@ -12,6 +12,8 @@ bars.lua
 bar.lua
 bars\mainBar.lua
 bars\topBar.lua
+bars\leftBar.lua
+bars\rightBar.lua
 
 hideBlizzard.lua
 
