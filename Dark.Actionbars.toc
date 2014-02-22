@@ -8,6 +8,10 @@
 settings.lua
 initialise.lua
 
+bars.lua
+bar.lua
+bars\mainBar.lua
+
 hideBlizzard.lua
 layout.lua
 skinButtons.lua
