@@ -1,6 +1,6 @@
 local addon, ns = ...
 
-local settings = ns.config
+local config = ns.config
 
 local core = Dark.core
 local style = core.style
@@ -20,8 +20,8 @@ local bar = {
 
 	layout = function(self)
 
-		local barWidth = ((settings.buttonSize + settings.spacing) * self.columns) - settings.spacing
-		local barHeight = ((settings.buttonSize + settings.spacing) * self.rows) - settings.spacing
+		local barWidth = ((config.buttonSize + config.spacing) * self.columns) - config.spacing
+		local barHeight = ((config.buttonSize + config.spacing) * self.rows) - config.spacing
 
 		self.bar:SetSize(barWidth, barHeight)
 
@@ -38,11 +38,11 @@ local bar = {
 			if (i - 1) % self.columns == 0 then
 
 				local row = math.floor((i - 1) / self.columns)
-				local offset = (settings.buttonSize + settings.spacing) * row
+				local offset = (config.buttonSize + config.spacing) * row
 
 				button:SetPoint("TOPLEFT", self.bar, "TOPLEFT", 0, -offset)
 			else
-				button:SetPoint("LEFT", previous, "RIGHT", settings.spacing, 0)
+				button:SetPoint("LEFT", previous, "RIGHT", config.spacing, 0)
 			end
 
 			previous = button
@@ -60,7 +60,7 @@ local bar = {
 
 	styleButton = function(self, button)
 
-		button:SetSize(settings.buttonSize, settings.buttonSize)
+		button:SetSize(config.buttonSize, config.buttonSize)
 		button:SetAttribute("showgrid", 1)
 		button:Show()
 
