@@ -1,6 +1,7 @@
 local addon, ns = ...
 
 local fonts = ns.lib.fonts
+local events = ns.lib.events:new()
 
 local config = ns.config.cooldowns
 --[[
@@ -553,34 +554,29 @@ local function actions_Update()
     end
 end
 
-
 --[[ Events ]]--
 
-local f = CreateFrame('Frame'); f:Hide()
-f:SetScript('OnEvent', function(self, event, ...)
-	-- update action cooldowns
-	if event == 'ACTIONBAR_UPDATE_COOLDOWN' then
-		actions_Update()
+local onPlayerEnteringWorld = function()
+	Timer:ForAllShown('UpdateText')
+end
 
-	-- update visible timers on player_entering_world (arena update hack)
-	elseif event == 'PLAYER_ENTERING_WORLD' then
-		Timer:ForAllShown('UpdateText')
+local onAddonLoaded = function(self, event, addonName)
 
-	-- hook cooldown stuff only after the addon is actually loaded
-	else
-		if ... == addon then
-			hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
-			hooksecurefunc('SetActionUIButton', action_Add)
+	if addonName == addon then
 
-			for i, button in pairs(ActionBarButtonEventsFrame.frames) do
-			    action_Add(button, button.action, button.cooldown)
-			end
+		hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
+		hooksecurefunc('SetActionUIButton', action_Add)
 
-			self:UnregisterEvent('ADDON_LOADED')
+		for i, button in pairs(ActionBarButtonEventsFrame.frames) do
+		    action_Add(button, button.action, button.cooldown)
 		end
-	end
-end)
 
-f:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN')
-f:RegisterEvent('PLAYER_ENTERING_WORLD')
-f:RegisterEvent('ADDON_LOADED')
+		events.unregister("ADDON_LOADED")
+
+	end
+
+end
+
+events.register("ACTIONBAR_UPDATE_COOLDOWN", actions_Update)
+events.register("PLAYER_ENTERING_WORLD", onPlayerEnteringWorld)
+events.register("ADDON_LOADED", onAddonLoaded)
