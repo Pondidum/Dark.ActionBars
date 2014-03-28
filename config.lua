@@ -1,9 +1,9 @@
 local addon, ns = ...
 
-local settings = {
+local config = {
 	buttonSize = 25,
 	spacing = 6,
 	screenPadding = 10,
 }
 
-ns.settings = settings
+ns.config = config

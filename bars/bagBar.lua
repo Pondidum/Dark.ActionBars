@@ -1,6 +1,6 @@
 local addon, ns = ...
 
-local settings = ns.settings
+local settings = ns.config
 local bar = ns.bar
 
 local style = Dark.core.style
