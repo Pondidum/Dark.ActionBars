@@ -20,5 +20,6 @@ bars\petBar.lua
 bars\bagBar.lua
 
 hideBlizzard.lua
+cooldowns.lua
 
 run.lua
