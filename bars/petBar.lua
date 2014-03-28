@@ -1,6 +1,6 @@
 local addon, ns = ...
 
-local settings = ns.config
+local config = ns.config
 local bar = ns.bar
 
 local style = Dark.core.style
@@ -9,7 +9,7 @@ bar:new({
 
 	name = "Pet",
 	bar = CreateFrame("Frame", "DarkPetActionBar", UIParent),
-	anchor = { "BOTTOM", "Top", "TOP", 0, settings.spacing },
+	anchor = { "BOTTOM", "Top", "TOP", 0, config.spacing },
 
 	rows = 1,
 	columns = NUM_PET_ACTION_SLOTS,
@@ -25,7 +25,7 @@ bar:new({
 
 	styleButton = function(self, button)
 
-		button:SetSize(settings.buttonSize, settings.buttonSize)
+		button:SetSize(config.buttonSize, config.buttonSize)
 		button:SetAttribute("showgrid", 1)
 		button:Show()
 
