@@ -6,6 +6,7 @@ local init = function()
 
 	local lib = {
 		fonts = core.fonts
+		events = core.events
 	}
 
 	ns.lib = lib
