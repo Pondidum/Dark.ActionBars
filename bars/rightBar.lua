@@ -1,13 +1,13 @@
 local addon, ns = ...
 
-local settings = ns.config
+local config = ns.config
 local bar = ns.bar
 
 bar:new({
 
 	name = "Right",
 	bar = MultiBarBottomRight,
-	anchor = { "BOTTOMLEFT", "Main", "BOTTOMRIGHT", settings.spacing + settings.spacing, 0 },
+	anchor = { "BOTTOMLEFT", "Main", "BOTTOMRIGHT", config.spacing + config.spacing, 0 },
 
 	rows = 2,
 	columns = 6,
