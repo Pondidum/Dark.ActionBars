@@ -275,7 +275,7 @@ end
 function Timer:UpdateTextStyle()
 	--print('Timer:UpdateTextStyle')
 
-	local font, size, outline = config.fontFace, config.fontSize, config.fontOutline
+	local font, size, outline =  fonts[config.fontFace], config.fontSize, config.fontOutline
 	local color = config.fontcolors[self.textStyle]
 
 	--fallback to the standard font if the font we tried to set happens to be invalid
