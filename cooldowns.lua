@@ -148,7 +148,6 @@ end
 
 
 --constants!
-local ADDON = ...
 local ICON_SIZE = 36 --the normal size for an icon (don't change this)
 local DAY, HOUR, MINUTE = 86400, 3600, 60 --used for formatting text
 local DAYISH, HOURISH, MINUTEISH, SOONISH = 3600 * 23.5, 60 * 59.5, 59.5, 5.5 --used for formatting text at transition points
@@ -569,7 +568,7 @@ f:SetScript('OnEvent', function(self, event, ...)
 
 	-- hook cooldown stuff only after the addon is actually loaded
 	else
-		if ... == ADDON then
+		if ... == addon then
 			hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
 			hooksecurefunc('SetActionUIButton', action_Add)
 
