@@ -1,13 +1,13 @@
 local addon, ns = ...
 
-local settings = ns.config
+local config = ns.config
 local bar = ns.bar
 
 bar:new({
 
 	name = "Stance",
 	bar = StanceBarFrame,
-	anchor = { "BOTTOMLEFT", "Left", "TOPLEFT", 0, settings.spacing },
+	anchor = { "BOTTOMLEFT", "Left", "TOPLEFT", 0, config.spacing },
 
 	rows = 1,
 	columns = NUM_STANCE_SLOTS,
