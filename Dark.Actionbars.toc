@@ -5,7 +5,7 @@
 ## Notes: Actionbars
 ## RequiredDeps: Dark.Core
 
-settings.lua
+config.lua
 initialise.lua
 
 bars.lua
