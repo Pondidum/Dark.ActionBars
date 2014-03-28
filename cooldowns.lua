@@ -1,4 +1,6 @@
-local D, S, E = unpack(select(2, ...))
+local addon, ns = ...
+
+local fonts = ns.lib.fonts
 --[[
 	cc.lua
 		Displays text for cooldowns on widgets
@@ -17,14 +19,14 @@ local config = {}
 
 config.enabled = true
 config.minDuration = 2.5
-config.showCooldownModels = true	
+config.showCooldownModels = true
 config.anchor = "CENTER"
 config.minSize = 0.5
 
 config.tenthsDuration = 8
 config.mmSSDuration = 0
 
-config.fontFace = S.fonts.normal
+config.fontFace = fonts.normal
 config.fontSize = 18
 config.fontOutline = 'OUTLINE'
 config.fontcolors = {
@@ -44,7 +46,7 @@ function Classy:New(frameType, parentClass)
 
 	if parentClass then
 		class = setmetatable(class, {__index = parentClass})
-		
+
 		class.super = function(self, method, ...)
 			parentClass[method](self, ...)
 		end
@@ -148,14 +150,14 @@ end
 
 
 function OmniCC:ScheduleUpdate(frame, delay)
-	local engine = OmniCC.ClassicUpdater 
+	local engine = OmniCC.ClassicUpdater
 	local updater = engine:Get(frame)
 
 	updater:ScheduleUpdate(delay)
 end
 
 function OmniCC:CancelUpdate(frame)
-	local engine = OmniCC.ClassicUpdater 
+	local engine = OmniCC.ClassicUpdater
 	local updater = engine:GetActive(frame)
 
 	if updater then
@@ -183,7 +185,7 @@ local GetTime = GetTime
 		displays time remaining for the given cooldown
 --]]
 
-local Timer = Classy:New('Frame'); Timer:Hide(); 
+local Timer = Classy:New('Frame'); Timer:Hide();
 OmniCC.Timer = Timer
 local timers = {}
 
@@ -212,7 +214,7 @@ end
 
 function Timer:OnScheduledUpdate()
 	--print('Timer:OnScheduledUpdate')
-	
+
 	self:UpdateText()
 end
 
@@ -252,7 +254,7 @@ end
 
 function Timer:UpdateText(forceStyleUpdate)
 	--print('Timer:UpdateText', forceStyleUpdate)
-	
+
 	--handle deathknight runes, which have timers that start in the future
 	if self.start > GetTime() then
 		self:ScheduleUpdate(self.start - GetTime())
@@ -292,7 +294,7 @@ end
 
 function Timer:UpdateTextStyle()
 	--print('Timer:UpdateTextStyle')
-	
+
 	local font, size, outline = config.fontFace, config.fontSize, config.fontOutline
 	local color = config.fontcolors[self.textStyle]
 
@@ -389,7 +391,7 @@ end
 
 --returns a format string, as well as any args for text to display
 function Timer:GetTimeText(remain)
-	
+
 	--show tenths of seconds below tenths threshold
 	if remain < config.tenthsDuration then
 		return '%.1f', remain
@@ -434,7 +436,7 @@ end
 --[[ Settings Methods ]]--
 
 --[[function Timer:GetSettings()
-	
+
 end]]--
 
 
@@ -580,21 +582,21 @@ f:SetScript('OnEvent', function(self, event, ...)
 	-- update action cooldowns
 	if event == 'ACTIONBAR_UPDATE_COOLDOWN' then
 		actions_Update()
-	
+
 	-- update visible timers on player_entering_world (arena update hack)
 	elseif event == 'PLAYER_ENTERING_WORLD' then
 		Timer:ForAllShown('UpdateText')
-		
+
 	-- hook cooldown stuff only after the addon is actually loaded
 	else
 		if ... == ADDON then
 			hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
 			hooksecurefunc('SetActionUIButton', action_Add)
-			
+
 			for i, button in pairs(ActionBarButtonEventsFrame.frames) do
 			    action_Add(button, button.action, button.cooldown)
 			end
-			
+
 			self:UnregisterEvent('ADDON_LOADED')
 		end
 	end
