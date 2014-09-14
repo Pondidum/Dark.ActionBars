@@ -16,6 +16,8 @@ local bar = {
 
 		ns.bars.add(config)
 
+		return config
+
 	end,
 
 	layout = function(self)
