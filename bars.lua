@@ -1,11 +1,13 @@
 local addon, ns = ...
 
 local configs = {}
+local ordered = {}
 
 local bars = {
 
 	add = function(config)
 		configs[config.name] = config
+		table.insert(ordered, config)
 	end,
 
 	get = function(name)
@@ -16,7 +18,7 @@ local bars = {
 		local config = configs[name]
 
 		if config then
-			return config.bar
+			return config.container
 		end
 
 		return nil
@@ -25,7 +27,7 @@ local bars = {
 
 	each = function(action)
 
-		for name, config in pairs(configs) do
+		for i, config in ipairs(ordered) do
 			action(config)
 		end
 
