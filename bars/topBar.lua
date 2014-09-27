@@ -6,7 +6,7 @@ local bar = ns.bar
 bar:new({
 
 	name = "Top",
-	bar = MultiBarLeft,
+	container = MultiBarLeft,
 	anchor = { "BOTTOM", "Main", "TOP", 0, config.spacing },
 
 	rows = 1,
@@ -15,7 +15,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_ACTIONBAR_BUTTONS do
-			table.insert(self.buttons, _G["MultiBarLeftButton" .. i])
+			table.insert(self.frames, _G["MultiBarLeftButton" .. i])
 		end
 
 	end,

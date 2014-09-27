@@ -6,7 +6,7 @@ local bar = ns.bar
 bar:new({
 
 	name = "Floating",
-	bar = MultiBarRight,
+	container = MultiBarRight,
 	anchor = { "RIGHT", "UIParent", "RIGHT", -config.screenPadding, 0 },
 
 	rows = 12,
@@ -15,7 +15,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_ACTIONBAR_BUTTONS do
-			table.insert(self.buttons, _G["MultiBarRightButton" .. i])
+			table.insert(self.frames, _G["MultiBarRightButton" .. i])
 		end
 
 	end,

@@ -8,7 +8,7 @@ local style = Dark.core.style
 bar:new({
 
 	name = "Pet",
-	bar = CreateFrame("Frame", "DarkPetActionBar", UIParent),
+	container = CreateFrame("Frame", "DarkPetActionBar", UIParent),
 	anchor = { "BOTTOM", "Top", "TOP", 0, config.spacing },
 
 	rows = 1,
@@ -17,13 +17,13 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_PET_ACTION_SLOTS do
-			table.insert(self.buttons, _G["PetActionButton" .. i])
+			table.insert(self.frames, _G["PetActionButton" .. i])
 		end
 
-		--self.bar.showgrid = 1
+		--self.container.showgrid = 1
 	end,
 
-	styleButton = function(self, button)
+	customiseFrame = function(self, button)
 
 		button:SetSize(config.buttonSize, config.buttonSize)
 		button:SetAttribute("showgrid", 1)

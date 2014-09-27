@@ -9,7 +9,7 @@ local style = Dark.core.style
 local bank = bar:new({
 
 	name = "Bank",
-	bar = CreateFrame("Frame", "DarkBankBagFrame", UIParent),
+	container = CreateFrame("Frame", "DarkBankBagFrame", UIParent),
 	anchor = { "TOPLEFT", "UIParent", "TOPLEFT", config.screenPadding, -config.screenPadding },
 
 	rows = 1,
@@ -18,15 +18,15 @@ local bank = bar:new({
 	init = function(self)
 
 		for i = 1, self.columns do
-			table.insert(self.buttons, _G["BankFrameBag" .. i])
+			table.insert(self.frames, _G["BankFrameBag" .. i])
 		end
 
-		self.bar:Hide()
+		self.container:Hide()
 	end,
 
-	styleButton = function(self, button)
+	customiseFrame = function(self, button)
 
-		button:SetParent(self.bar)
+		button:SetParent(self.container)
 		button:SetSize(config.buttonSize, config.buttonSize)
 		button:Show()
 
@@ -46,10 +46,11 @@ local bank = bar:new({
 })
 
 events.register("BANKFRAME_OPENED", function()
-	bank.bar:Show()
+	bank.container:Show()
 	bank:layout()
 end)
 
 events.register("BANKFRAME_CLOSED", function()
-	bank.bar:Hide()
+	bank.container:Hide()
 end)
+

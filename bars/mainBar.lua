@@ -6,7 +6,7 @@ local bar = ns.bar
 bar:new({
 
 	name = "Main",
-	bar = MainMenuBar,
+	container = MainMenuBar,
 	anchor = { "BOTTOM", "UIParent", "BOTTOM", 0, config.screenPadding },
 
 	rows = 1,
@@ -15,7 +15,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_ACTIONBAR_BUTTONS do
-			table.insert(self.buttons, _G["ActionButton" .. i])
+			table.insert(self.frames, _G["ActionButton" .. i])
 		end
 
 	end,
