@@ -18,7 +18,6 @@ bars\floatingBar.lua
 bars\stanceBar.lua
 bars\petBar.lua
 bars\bagBar.lua
-bars\bankBagBar.lua
 
 hideBlizzard.lua
 cooldowns.lua
