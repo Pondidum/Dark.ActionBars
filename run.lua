@@ -5,6 +5,7 @@ local events = core.events.new()
 events.register("PLAYER_ENTERING_WORLD", function()
 
 	ns.hideBlizzard()
+	ns.binder()
 
 	ns.bars.each(function(bar)
 		bar:layout()

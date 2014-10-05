@@ -7,6 +7,7 @@ local init = function()
 	local lib = {
 		fonts = core.fonts,
 		events = core.events,
+		slash = core.slash,
 	}
 
 	ns.lib = lib
