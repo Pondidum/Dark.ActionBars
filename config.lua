@@ -28,6 +28,10 @@ local config = {
 		},
 	},
 
+	binding = {
+		storeTo = "ACCOUNT"
+	}
+
 }
 
 ns.config = config

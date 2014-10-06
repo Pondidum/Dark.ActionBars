@@ -3,6 +3,8 @@ local addon, ns = ...
 local slash = ns.lib.slash
 local bind = CreateFrame("Frame", "DarkHoverBind", UIParent)
 
+local config = ns.config
+
 local slashHandler = function()
 
 	if InCombatLockdown() then
@@ -220,13 +222,17 @@ local slashHandler = function()
 			self:RegisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		function bind:Deactivate(save)
+
+			local bindTarget = config.binding.saveTo == "ACCOUNT" and 1 or 2
+
 			if save then
-				SaveBindings(1)
+				SaveBindings(bindTarget)
 				print("All keybindings have been saved.")
 			else
-				LoadBindings(1)
+				LoadBindings(bindTarget)
 				print("All newly set keybindings have been discarded.")
 			end
+
 			self.enabled = false
 			self:HideFrame()
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
