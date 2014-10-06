@@ -255,17 +255,6 @@ local slashHandler = function()
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 
-		-- StaticPopupDialogs["KEYBIND_MODE"] = {
-		-- 	text = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
-		-- 	button1 ="Save",
-		-- 	button2 = "Discard",
-		-- 	OnAccept = function() bind:Deactivate(true) end,
-		-- 	OnCancel = function() bind:Deactivate(false) end,
-		-- 	timeout = 0,
-		-- 	whileDead = 1,
-		-- 	hideOnEscape = false
-		-- }
-
 		-- REGISTERING
 		local stance = StanceButton1:GetScript("OnClick")
 		local pet = PetActionButton1:GetScript("OnClick")
@@ -316,7 +305,6 @@ local slashHandler = function()
 
 	if not bind.enabled then
 		bind:Activate()
-		--StaticPopup_Show("KEYBIND_MODE")
 		dialog:show()
 	end
 
