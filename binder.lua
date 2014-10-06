@@ -5,16 +5,20 @@ local bind = CreateFrame("Frame", "DarkHoverBind", UIParent)
 
 local config = ns.config
 
-local dialog = ns.dialog:new("KEYBIND_MODE")
-dialog.save = function(self)
-	bind:Deactivate(true)
-	self:hide()
-end
+local dialog = ns.dialog:new({
+	name = "KEYBIND_MODE",
+	description = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
 
-dialog.discard = function(self)
-	bind:Deactivate(false)
-	self:hide()
-end
+	save = function(self)
+		bind:Deactivate(true)
+		self:hide()
+	end,
+
+	discard = function(self)
+		bind:Deactivate(false)
+		self:hide()
+	end
+})
 
 local slashHandler = function()
 

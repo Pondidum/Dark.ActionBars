@@ -2,21 +2,19 @@ local addon, ns = ...
 
 local dialog = {
 
-	new = function(self, name)
+	new = function(self, config)
 
-		local this = setmetatable({}, { __index = self})
-		this.name = name
+		setmetatable(config, { __index = self})
+		config:init()
 
-		this:init()
-
-		return this
+		return config
 
 	end,
 
 	init = function(self)
 
 		local dialogDefinition =  {
-			text = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
+			text = self.description,
 			button1 ="Save",
 			button2 = "Discard",
 			OnAccept = function() self:save() end,
