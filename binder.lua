@@ -5,6 +5,17 @@ local bind = CreateFrame("Frame", "DarkHoverBind", UIParent)
 
 local config = ns.config
 
+local dialog = ns.dialog:new("KEYBIND_MODE")
+dialog.save = function(self)
+	bind:Deactivate(true)
+	self:hide()
+end
+
+dialog.discard = function(self)
+	bind:Deactivate(false)
+	self:hide()
+end
+
 local slashHandler = function()
 
 	if InCombatLockdown() then
@@ -221,6 +232,8 @@ local slashHandler = function()
 			self.enabled = true
 			self:RegisterEvent("PLAYER_REGEN_DISABLED")
 		end
+
+
 		function bind:Deactivate(save)
 
 			local bindTarget = config.binding.saveTo == "ACCOUNT" and 1 or 2
@@ -236,19 +249,18 @@ local slashHandler = function()
 			self.enabled = false
 			self:HideFrame()
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-			StaticPopup_Hide("KEYBIND_MODE")
 		end
 
-		StaticPopupDialogs["KEYBIND_MODE"] = {
-			text = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
-			button1 ="Save",
-			button2 = "Discard",
-			OnAccept = function() bind:Deactivate(true) end,
-			OnCancel = function() bind:Deactivate(false) end,
-			timeout = 0,
-			whileDead = 1,
-			hideOnEscape = false
-		}
+		-- StaticPopupDialogs["KEYBIND_MODE"] = {
+		-- 	text = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
+		-- 	button1 ="Save",
+		-- 	button2 = "Discard",
+		-- 	OnAccept = function() bind:Deactivate(true) end,
+		-- 	OnCancel = function() bind:Deactivate(false) end,
+		-- 	timeout = 0,
+		-- 	whileDead = 1,
+		-- 	hideOnEscape = false
+		-- }
 
 		-- REGISTERING
 		local stance = StanceButton1:GetScript("OnClick")
@@ -300,7 +312,8 @@ local slashHandler = function()
 
 	if not bind.enabled then
 		bind:Activate()
-		StaticPopup_Show("KEYBIND_MODE")
+		--StaticPopup_Show("KEYBIND_MODE")
+		dialog:show()
 	end
 
 end

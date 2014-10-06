@@ -8,6 +8,8 @@
 config.lua
 initialise.lua
 
+dialog.lua
+
 bars.lua
 bar.lua
 bars\mainBar.lua
