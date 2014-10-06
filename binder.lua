@@ -245,7 +245,7 @@ local slashHandler = function()
 		}
 
 		-- REGISTERING
-		local stance = ShapeshiftButton1:GetScript("OnClick")
+		local stance = StanceButton1:GetScript("OnClick")
 		local pet = PetActionButton1:GetScript("OnClick")
 		local button = SecureActionButton_OnClick
 
