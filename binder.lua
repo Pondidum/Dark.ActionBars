@@ -310,6 +310,58 @@ local slashHandler = function()
 
 end
 
+
+
+
+
+local keybindConfirm = ns.dialog:new({
+	name = "DARK_KEYBIND_MODE",
+	description = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
+})
+
+local hoverBind = function()
+
+	local bars = ns.bars
+	local active = false
+
+	keybindConfirm.save = function()
+		active = false
+	end
+
+	keybindConfirm.discard = function()
+		active = false
+	end
+
+	local onEnter = function(self)
+
+		if not active then
+			return
+		end
+
+		local command
+
+		if self.buttonType then
+			command = self.buttonType .. self:GetID()
+		else
+			command = self:GetName()
+		end
+
+		print(GetBindingKey(command))
+	end
+
+	bars.each(function(bar)
+
+		for i, button in ipairs(bar.frames) do
+			button:HookScript("OnEnter", onEnter)
+		end
+	end)
+
+	active = true
+	keybindConfirm:show()
+
+end
+
 ns.binder = function()
 	slash.register("bind", slashHandler)
+	slash.register("hb", hoverBind)
 end
