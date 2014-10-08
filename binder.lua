@@ -344,6 +344,13 @@ local hoverBind = function()
 			command = self.buttonType .. self:GetID()
 		else
 			command = self:GetName()
+
+			if command:match("StanceButton") then
+				command = "SHAPESHIFTBUTTON" .. self:GetID()
+			elseif command:match("PetActionButton") then
+				command = "BONUSACTIONBUTTON" .. self:GetID()
+			end
+
 		end
 
 		print(GetBindingKey(command))
