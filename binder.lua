@@ -316,13 +316,13 @@ local core = Dark.core
 local style = core.style
 local ui = core.ui
 
+local bindingActive = false
 
 local bindInfoDisplay = {
 
-	new = function(self)
+	new = function(self, this)
 
-		local this = setmetatable({}, { __index = self })
-
+		this = setmetatable(this or {}, { __index = self })
 
 		local bind = CreateFrame("Frame", "DarkBindInfo", UIParent)
 		bind:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 150)
@@ -338,12 +338,43 @@ local bindInfoDisplay = {
 		name:SetPoint("TOPRIGHT", bind, "TOPRIGHT", -5, 0)
 		name:SetHeight(25)
 
-
 		local keys = ui.createFont(bind)
 
 		keys:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, 0)
 		keys:SetPoint("TOPRIGHT", name, "BOTTOMRIGHT", 0, 0)
 		keys:SetPoint("BOTTOM", bind, "BOTTOM", 0, 0)
+
+		local accept = CreateFrame("Button", "$parentAccept", bind, "ActionButtonTemplate")
+		accept:SetPoint("TOPLEFT", bind, "BOTTOMLEFT", 0, -6)
+		accept:SetPoint("RIGHT", bind, "CENTER", -3, 0)
+		accept:SetHeight(25)
+
+		accept.text = ui.createFont(accept)
+		accept.text:SetAllPoints(accept)
+		accept.text:SetJustifyH("CENTER")
+		accept.text:SetText("Accept")
+
+		style.actionButton(accept)
+
+		accept:RegisterForClicks("AnyUp")
+		accept:SetScript("OnClick", function() this:accept() end)
+
+
+		local cancel = CreateFrame("Button", "$parentCancel", bind, "ActionButtonTemplate")
+		cancel:SetPoint("TOPRIGHT", bind, "BOTTOMRIGHT", 0, -6)
+		cancel:SetPoint("LEFT", bind, "CENTER", 3, 0)
+		cancel:SetHeight(25)
+
+		cancel.text = ui.createFont(cancel)
+		cancel.text:SetAllPoints(cancel)
+		cancel.text:SetJustifyH("CENTER")
+		cancel.text:SetText("Discard")
+
+		style.actionButton(cancel)
+
+		cancel:RegisterForClicks("AnyUp")
+		cancel:SetScript("OnClick", function() this:cancel() end)
+
 
 		this.ui = bind
 		this.name = name
@@ -357,6 +388,10 @@ local bindInfoDisplay = {
 		self.ui:Show()
 	end,
 
+	hide = function(self)
+		self.ui:Hide()
+	end,
+
 	setInfo = function(self, buttonName, keysBound)
 
 		self.name:SetText(buttonName)
@@ -366,29 +401,27 @@ local bindInfoDisplay = {
 
 }
 
-local keybind = bindInfoDisplay:new()
-
-local keybindConfirm = ns.dialog:new({
-	name = "DARK_KEYBIND_MODE",
+local keybind = bindInfoDisplay:new({
 	description = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
+
+	accept = function(self)
+		bindingActive = false
+		self:hide()
+	end,
+
+	cancel = function(self)
+		bindingActive = false
+		self:hide()
+	end,
 })
 
 local hoverBind = function()
 
 	local bars = ns.bars
-	local active = false
-
-	keybindConfirm.save = function()
-		active = false
-	end
-
-	keybindConfirm.discard = function()
-		active = false
-	end
 
 	local onEnter = function(self)
 
-		if not active then
+		if not bindingActive then
 			return
 		end
 
@@ -411,16 +444,26 @@ local hoverBind = function()
 
 	end
 
+	local onLeave = function(self)
+
+		if not bindingActive then
+			return
+		end
+
+		keybind:setInfo("", "")
+
+	end
+
 	bars.each(function(bar)
 
 		for i, button in ipairs(bar.frames) do
 			button:HookScript("OnEnter", onEnter)
+			button:HookScript("OnLeave", onLeave)
 		end
 
 	end)
 
-	active = true
-	keybindConfirm:show()
+	bindingActive = true
 	keybind:show()
 
 end
