@@ -311,8 +311,62 @@ local slashHandler = function()
 end
 
 
+local core = Dark.core
+
+local style = core.style
+local ui = core.ui
 
 
+local bindInfoDisplay = {
+
+	new = function(self)
+
+		local this = setmetatable({}, { __index = self })
+
+
+		local bind = CreateFrame("Frame", "DarkBindInfo", UIParent)
+		bind:SetPoint("BOTTOM", MainMenuBar, "TOP", 0, 150)
+		bind:SetSize(200, 60)
+		bind:Hide()
+
+		style.addShadow(bind)
+		style.applyBackgroundTo(bind)
+
+		local name = ui.createFont(bind)
+
+		name:SetPoint("TOPLEFT", bind, "TOPLEFT", 5, 0)
+		name:SetPoint("TOPRIGHT", bind, "TOPRIGHT", -5, 0)
+		name:SetHeight(25)
+
+
+		local keys = ui.createFont(bind)
+
+		keys:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, 0)
+		keys:SetPoint("TOPRIGHT", name, "BOTTOMRIGHT", 0, 0)
+		keys:SetPoint("BOTTOM", bind, "BOTTOM", 0, 0)
+
+		this.ui = bind
+		this.name = name
+		this.keys = keys
+
+		return this
+
+	end,
+
+	show = function(self)
+		self.ui:Show()
+	end,
+
+	setInfo = function(self, buttonName, keysBound)
+
+		self.name:SetText(buttonName)
+		self.keys:SetText(keysBound)
+
+	end,
+
+}
+
+local keybind = bindInfoDisplay:new()
 
 local keybindConfirm = ns.dialog:new({
 	name = "DARK_KEYBIND_MODE",
@@ -353,7 +407,8 @@ local hoverBind = function()
 
 		end
 
-		print(GetBindingKey(command))
+		keybind:setInfo(self:GetName(), GetBindingKey(command))
+
 	end
 
 	bars.each(function(bar)
@@ -361,10 +416,12 @@ local hoverBind = function()
 		for i, button in ipairs(bar.frames) do
 			button:HookScript("OnEnter", onEnter)
 		end
+
 	end)
 
 	active = true
 	keybindConfirm:show()
+	keybind:show()
 
 end
 
