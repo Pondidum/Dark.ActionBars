@@ -25,9 +25,12 @@ local hideBlizzardParts = function()
 	hideTextures(OverrideActionBar)
 
 	MainMenuExpBar:Hide()
+	MainMenuExpBar.Show  = fake
 	MainMenuBarMaxLevelBar:Hide()
 	MainMenuBarMaxLevelBar:UnregisterAllEvents()
 	MainMenuBarMaxLevelBar.Show = fake
+	ExhaustionTick:UnregisterAllEvents()
+	ExhaustionTick:SetScript("OnEvent", nil)
 
 	ReputationWatchBar:Hide()
 	ReputationWatchStatusBar:Hide()
