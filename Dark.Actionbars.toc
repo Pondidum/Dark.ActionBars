@@ -1,4 +1,4 @@
-## Interface: 50001
+## Interface: 60000
 ## Title: Dark.Actionbars
 ## Author: Darkend / DarkStorm / Zenedar / EU
 ## Version: 1.0.0
