@@ -7,7 +7,8 @@ local init = function()
 
 	local lib = {
 		fonts = dark.media.fonts,
-		events = core.events,
+		events = dark.events,
+		class = dark.class,
 		slash = core.slash,
 	}
 

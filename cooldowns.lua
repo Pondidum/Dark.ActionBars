@@ -1,7 +1,6 @@
 local addon, ns = ...
 
 local fonts = ns.lib.fonts
-local events = ns.lib.events:new()
 
 local config = ns.config.cooldowns
 --[[
@@ -547,36 +546,49 @@ local function action_Add(button, action, cooldown)
 	cooldown.omniccAction = action
 end
 
-local function actions_Update()
-	for cooldown in pairs(actions) do
-        local start, duration = GetActionCooldown(cooldown.omniccAction)
-        cooldown_Show(cooldown, start, duration)
-    end
-end
+local class = ns.lib.class
+local events = ns.lib.events
 
---[[ Events ]]--
+local cooldownsComponent = class:extend({
 
-local onPlayerEnteringWorld = function()
-	Timer:ForAllShown('UpdateText')
-end
+	events = {
+		"ACTIONBAR_UPDATE_COOLDOWN",
+		"PLAYER_ENTERING_WORLD",
+		"ADDON_LOADED",
+	},
 
-local onAddonLoaded = function(self, event, addonName)
+	ctor = function(self)
+		self:include(events)
+	end,
 
-	if addonName == addon then
+	ACTIONBAR_UPDATE_COOLDOWN = function(self)
+		for cooldown in pairs(actions) do
+			local start, duration = GetActionCooldown(cooldown.omniccAction)
+			cooldown_Show(cooldown, start, duration)
+		end
+	end,
 
-		hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
-		hooksecurefunc('SetActionUIButton', action_Add)
+	PLAYER_ENTERING_WORLD = function(self)
+		Timer:ForAllShown('UpdateText')
+	end,
 
-		for i, button in pairs(ActionBarButtonEventsFrame.frames) do
-		    action_Add(button, button.action, button.cooldown)
+	ADDON_LOADED = function(self, addonName)
+
+		if addonName == addon then
+
+			hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', cooldown_Show)
+			hooksecurefunc('SetActionUIButton', action_Add)
+
+			for i, button in pairs(ActionBarButtonEventsFrame.frames) do
+		    	action_Add(button, button.action, button.cooldown)
+			end
+
+			self:unregister("ADDON_LOADED")
+
 		end
 
-		events.unregister("ADDON_LOADED")
+	end,
 
-	end
+})
 
-end
-
-events.register("ACTIONBAR_UPDATE_COOLDOWN", actions_Update)
-events.register("PLAYER_ENTERING_WORLD", onPlayerEnteringWorld)
-events.register("ADDON_LOADED", onAddonLoaded)
+cooldownsComponent:new()

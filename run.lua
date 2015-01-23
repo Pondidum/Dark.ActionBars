@@ -1,14 +1,25 @@
 local addon, ns = ...
-local core = Dark.core
-local events = core.events.new()
 
-events.register("PLAYER_ENTERING_WORLD", function()
+local class = ns.lib.class
+local events = ns.lib.events
 
-	ns.hideBlizzard()
-	ns.binder()
+local addon = class:extend({
 
-	ns.bars.each(function(bar)
-		bar:layout()
-	end)
+	ctor = function(self)
+		self:include(events)
+		self:register("PLAYER_ENTERING_WORLD")
+	end,
 
-end)
+	PLAYER_ENTERING_WORLD = function()
+
+		ns.hideBlizzard()
+		ns.binder()
+
+		ns.bars.each(function(bar)
+			bar:layout()
+		end)
+
+	end,
+})
+
+Dark.actionBars = addon:new()
