@@ -3,7 +3,7 @@ local addon, ns = ...
 local config = ns.config
 local bar = ns.bar
 
-local style = Dark.core.style
+local style = ns.lib.style
 
 bar:new({
 
@@ -29,7 +29,7 @@ bar:new({
 		button:SetAttribute("showgrid", 1)
 		button:Show()
 
-		style.petActionButton(button)
+		style:petActionButton(button)
 
 	end,
 
