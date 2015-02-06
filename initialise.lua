@@ -9,6 +9,7 @@ local init = function()
 		fonts = dark.media.fonts,
 		events = dark.events,
 		class = dark.class,
+		style = dark.style,
 		slash = core.slash,
 	}
 
