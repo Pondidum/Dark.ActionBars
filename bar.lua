@@ -3,7 +3,7 @@ local addon, ns = ...
 local config = ns.config
 
 local core = Dark.core
-local style = core.style
+local style = ns.lib.style
 
 
 local bar = core.frameSeries:extend({
@@ -39,7 +39,7 @@ local bar = core.frameSeries:extend({
 		frame:SetAttribute("showgrid", 1)
 		frame:Show()
 
-		style.actionButton(frame)
+		style:actionButton(frame)
 	end,
 
 })
