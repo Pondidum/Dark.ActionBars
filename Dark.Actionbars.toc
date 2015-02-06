@@ -3,7 +3,7 @@
 ## Author: Darkend / DarkStorm / Zenedar / EU
 ## Version: 1.0.0
 ## Notes: Actionbars
-## RequiredDeps: Dark.Core
+## RequiredDeps: Dark.Core, Dark
 
 config.lua
 initialise.lua
