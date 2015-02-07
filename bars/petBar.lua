@@ -17,7 +17,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_PET_ACTION_SLOTS do
-			table.insert(self.frames, _G["PetActionButton" .. i])
+			table.insert(self.children, _G["PetActionButton" .. i])
 		end
 
 		--self.container.showgrid = 1

@@ -16,10 +16,10 @@ bar:new({
 
 	init = function(self)
 
-		table.insert(self.frames, MainMenuBarBackpackButton)
+		table.insert(self.children, MainMenuBarBackpackButton)
 
 		for i = 0, NUM_BAG_FRAMES do
-			table.insert(self.frames, _G["CharacterBag" .. i .. "Slot"])
+			table.insert(self.children, _G["CharacterBag" .. i .. "Slot"])
 		end
 
 	end,
