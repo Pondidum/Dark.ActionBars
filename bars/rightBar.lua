@@ -15,7 +15,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_ACTIONBAR_BUTTONS do
-			table.insert(self.children, _G["MultiBarBottomRightButton" .. i])
+			self:addChild(_G["MultiBarBottomRightButton" .. i])
 		end
 
 	end,

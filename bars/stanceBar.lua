@@ -15,7 +15,7 @@ bar:new({
 	init = function(self)
 
 		for i = 1, NUM_STANCE_SLOTS do
-			table.insert(self.children, _G["StanceButton" .. i])
+			self:addChild(_G["StanceButton" .. i])
 		end
 
 	end,
