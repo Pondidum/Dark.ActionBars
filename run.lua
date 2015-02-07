@@ -16,7 +16,7 @@ local addon = class:extend({
 		ns.binder()
 
 		ns.bars.each(function(bar)
-			bar:layout()
+			bar:performLayout()
 		end)
 
 	end,
