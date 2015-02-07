@@ -1,26 +1,25 @@
 local addon, ns = ...
 
 local config = ns.config
-
-local core = Dark.core
 local style = ns.lib.style
 
+local bar = Darker.layoutEngine:extend({
 
-local bar = core.frameSeries:extend({
+	ctor = function(self, options)
 
-	new = function(self, this)
+		options.layout = "series"
+		options.itemSize = config.buttonSize
+		options.itemSpacing = config.spacing
 
-		setmetatable(this, { __index = self })
+		self:base():ctor(options.container, options)
 
-		this.frames = {}
-		this.frameSize = config.buttonSize
-		this.spacing = config.spacing
+		self.anchor = options.anchor
+		self.name = options.name
+		self.customiseFrame = options.customiseFrame or self.customiseFrame
 
-		this:init()
+		options.init(self)
+		ns.bars.add(self)
 
-		ns.bars.add(this)
-
-		return this
 	end,
 
 	afterLayout = function(self)
@@ -32,16 +31,22 @@ local bar = core.frameSeries:extend({
 		self.container:SetPoint(anchor, otherBar or other , otherAnchor, x, y)
 
 		UIPARENT_MANAGED_FRAME_POSITIONS[self.container:GetName()] = nil
+
+		for i, child in ipairs(self.children) do
+			self:customiseFrame(child)
+		end
 	end,
 
 	customiseFrame = function(self, frame)
-
 		frame:SetAttribute("showgrid", 1)
 		frame:Show()
 
 		style:actionButton(frame)
 	end,
 
+	add = function(self, child)
+		self:addChild(child)
+	end,
 })
 
 ns.bar = bar
