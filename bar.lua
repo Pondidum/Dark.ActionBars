@@ -44,9 +44,6 @@ local bar = Darker.layoutEngine:extend({
 		style:actionButton(frame)
 	end,
 
-	add = function(self, child)
-		self:addChild(child)
-	end,
 })
 
 ns.bar = bar
