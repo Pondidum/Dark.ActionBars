@@ -2,9 +2,7 @@ local addon, ns = ...
 
 local slash = ns.lib.slash
 local style = ns.lib.style
-
-local core = Dark.core
-local ui = core.ui
+local fonts = ns.lib.fonts
 
 local bindingActive = false
 
@@ -21,13 +19,13 @@ local bindInfoDisplay = {
 
 		style:frame(bind)
 
-		local name = ui.createFont(bind)
+		local name = fonts:create(bind)
 
 		name:SetPoint("TOPLEFT", bind, "TOPLEFT", 5, 0)
 		name:SetPoint("TOPRIGHT", bind, "TOPRIGHT", -5, 0)
 		name:SetHeight(25)
 
-		local keys = ui.createFont(bind)
+		local keys = fonts:create(bind)
 
 		keys:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, 0)
 		keys:SetPoint("TOPRIGHT", name, "BOTTOMRIGHT", 0, 0)
@@ -38,7 +36,7 @@ local bindInfoDisplay = {
 		accept:SetPoint("RIGHT", bind, "CENTER", -3, 0)
 		accept:SetHeight(25)
 
-		accept.text = ui.createFont(accept)
+		accept.text = fonts:create(accept)
 		accept.text:SetAllPoints(accept)
 		accept.text:SetJustifyH("CENTER")
 		accept.text:SetText("Accept")
@@ -54,7 +52,7 @@ local bindInfoDisplay = {
 		cancel:SetPoint("LEFT", bind, "CENTER", 3, 0)
 		cancel:SetHeight(25)
 
-		cancel.text = ui.createFont(cancel)
+		cancel.text = fonts:create(cancel)
 		cancel.text:SetAllPoints(cancel)
 		cancel.text:SetJustifyH("CENTER")
 		cancel.text:SetText("Discard")
