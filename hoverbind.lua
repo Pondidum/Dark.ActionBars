@@ -1,10 +1,11 @@
 local addon, ns = ...
 
+local class = ns.lib.class
 local slash = ns.lib.slash
 local style = ns.lib.style
 local fonts = ns.lib.fonts
 
-local bindingActive = false
+local bars = ns.bars
 
 local bindInfoDisplay = {
 
@@ -88,6 +89,8 @@ local bindInfoDisplay = {
 
 }
 
+local bindingActive = false
+
 local keybind = bindInfoDisplay:new({
 	description = "Hover your mouse over any actionbutton to bind it. Press the escape key or right click to clear the current actionbuttons keybinding.",
 
@@ -102,59 +105,197 @@ local keybind = bindInfoDisplay:new({
 	end,
 })
 
-local hoverBind = function()
+local binds = class:extend({
 
-	local bars = ns.bars
+	ctor = function(self)
+		self.binds = {}
+	end,
 
-	local onEnter = function(self)
-
-		if not bindingActive then
-			return
-		end
+	getCommand = function(self, button)
 
 		local command
 
-		if self.buttonType then
-			command = self.buttonType .. self:GetID()
+		if button.buttonType then
+			command = button.buttonType .. button:GetID()
 		else
-			command = self:GetName()
+			command = button:GetName()
 
 			if command:match("StanceButton") then
-				command = "SHAPESHIFTBUTTON" .. self:GetID()
+				command = "SHAPESHIFTBUTTON" .. button:GetID()
 			elseif command:match("PetActionButton") then
-				command = "BONUSACTIONBUTTON" .. self:GetID()
+				command = "BONUSACTIONBUTTON" .. button:GetID()
 			end
 
 		end
 
-		keybind:setInfo(self:GetName(), GetBindingKey(command))
+		return command
+	end,
 
-	end
+	readButtonBinds = function(self, button)
 
-	local onLeave = function(self)
+		local command = self:getCommand(button)
+		local binds = self.binds[button] or {}
 
-		if not bindingActive then
+		table.wipe(binds)
+
+
+		for i, v in ipairs({GetBindingKey(command)}) do
+			binds[v] = true
+		end
+
+		self.binds[button] = binds
+
+	end,
+
+	addButtonBind = function(self, button, bind)
+
+		self.binds[button] = self.binds[button] or {}
+		self.binds[button][bind] = true
+
+	end,
+
+	getButtonBinds = function(self, button)
+
+		local binds = {}
+
+		for i,v in ipairs(self.binds[button] or {}) do
+		 	table.insert(binds, v)
+		end
+
+		return binds
+	end,
+})
+
+local hoverBinder = class:extend({
+
+	ctor = function(self)
+
+		self.binds = binds:new()
+
+		self:readAllBinds()
+		self:hookButtons()
+		self:display()
+
+	end,
+
+	readAllBinds = function(self)
+
+		bars.each(function(bar)
+
+			for i, button in ipairs(bar.children) do
+				self.binds:readButtonBinds(button)
+			end
+
+		end)
+
+	end,
+
+	hookButtons = function(self)
+
+		local onEnter = function(button)
+
+			if not bindingActive then
+				return
+			end
+
+			local binds = self.binds:getButtonBinds(button)
+			local text = table.concat(binds)
+
+			keybind:setInfo(button:GetName(), text)
+
+		end
+
+		local onLeave = function(button)
+
+			if not bindingActive then
+				return
+			end
+
+			keybind:setInfo("", "")
+
+		end
+
+		bars.each(function(bar)
+
+			for i, button in ipairs(bar.children) do
+				button:HookScript("OnEnter", onEnter)
+				button:HookScript("OnLeave", onLeave)
+			end
+
+		end)
+
+	end,
+
+	display = function(self)
+
+		if bindingActive then
 			return
 		end
 
-		keybind:setInfo("", "")
+		bindingActive = true
+		keybind:show()
 
-	end
 
-	bars.each(function(bar)
+	end,
+	--keybind:setInfo(self:GetName(), GetBindingKey(command))
 
-		for i, button in ipairs(bar.children) do
-			button:HookScript("OnEnter", onEnter)
-			button:HookScript("OnLeave", onLeave)
-		end
+})
 
-	end)
+-- local hoverBind = function()
 
-	bindingActive = true
-	keybind:show()
+-- 	local bars = ns.bars
 
-end
+-- 	local onEnter = function(self)
+
+-- 		if not bindingActive then
+-- 			return
+-- 		end
+
+-- 		local command
+
+-- 		if self.buttonType then
+-- 			command = self.buttonType .. self:GetID()
+-- 		else
+-- 			command = self:GetName()
+
+-- 			if command:match("StanceButton") then
+-- 				command = "SHAPESHIFTBUTTON" .. self:GetID()
+-- 			elseif command:match("PetActionButton") then
+-- 				command = "BONUSACTIONBUTTON" .. self:GetID()
+-- 			end
+
+-- 		end
+
+-- 		keybind:setInfo(self:GetName(), GetBindingKey(command))
+
+-- 	end
+
+-- 	local onLeave = function(self)
+
+-- 		if not bindingActive then
+-- 			return
+-- 		end
+
+-- 		keybind:setInfo("", "")
+
+-- 	end
+
+-- 	bars.each(function(bar)
+
+-- 		for i, button in ipairs(bar.children) do
+-- 			button:HookScript("OnEnter", onEnter)
+-- 			button:HookScript("OnLeave", onLeave)
+-- 		end
+
+-- 	end)
+
+-- 	bindingActive = true
+-- 	keybind:show()
+
+-- end
 
 ns.binder = function()
-	slash.register("hb", hoverBind)
+	slash.register("hb", function()
+		hoverBinder:new()
+	end)
 end
