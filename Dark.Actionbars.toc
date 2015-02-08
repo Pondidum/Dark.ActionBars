@@ -24,5 +24,6 @@ bars\bagBar.lua
 hideBlizzard.lua
 cooldowns.lua
 binder.lua
+hoverbind.lua
 
 run.lua

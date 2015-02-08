@@ -456,7 +456,7 @@ local hoverBind = function()
 
 	bars.each(function(bar)
 
-		for i, button in ipairs(bar.frames) do
+		for i, button in ipairs(bar.children) do
 			button:HookScript("OnEnter", onEnter)
 			button:HookScript("OnLeave", onLeave)
 		end
@@ -468,7 +468,7 @@ local hoverBind = function()
 
 end
 
-ns.binder = function()
-	slash.register("bind", slashHandler)
-	slash.register("hb", hoverBind)
-end
+-- ns.binder = function()
+-- 	slash.register("bind", slashHandler)
+-- 	slash.register("hb", hoverBind)
+-- end
