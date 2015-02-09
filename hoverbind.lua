@@ -105,7 +105,7 @@ local keybind = bindInfoDisplay:new({
 	end,
 })
 
-local binds = class:extend({
+local bindStore = class:extend({
 
 	ctor = function(self)
 		self.binds = {}
@@ -138,7 +138,6 @@ local binds = class:extend({
 
 		table.wipe(binds)
 
-
 		for i, v in ipairs({GetBindingKey(command)}) do
 			binds[v] = true
 		end
@@ -158,8 +157,8 @@ local binds = class:extend({
 
 		local binds = {}
 
-		for i,v in ipairs(self.binds[button] or {}) do
-		 	table.insert(binds, v)
+		for key, v in pairs(self.binds[button] or {}) do
+			table.insert(binds, key)
 		end
 
 		return binds
@@ -170,7 +169,7 @@ local hoverBinder = class:extend({
 
 	ctor = function(self)
 
-		self.binds = binds:new()
+		self.binds = bindStore:new()
 
 		self:readAllBinds()
 		self:hookButtons()
@@ -199,7 +198,7 @@ local hoverBinder = class:extend({
 			end
 
 			local binds = self.binds:getButtonBinds(button)
-			local text = table.concat(binds)
+			local text = table.concat(binds, ", ")
 
 			keybind:setInfo(button:GetName(), text)
 
@@ -237,62 +236,8 @@ local hoverBinder = class:extend({
 
 
 	end,
-	--keybind:setInfo(self:GetName(), GetBindingKey(command))
 
 })
-
--- local hoverBind = function()
-
--- 	local bars = ns.bars
-
--- 	local onEnter = function(self)
-
--- 		if not bindingActive then
--- 			return
--- 		end
-
--- 		local command
-
--- 		if self.buttonType then
--- 			command = self.buttonType .. self:GetID()
--- 		else
--- 			command = self:GetName()
-
--- 			if command:match("StanceButton") then
--- 				command = "SHAPESHIFTBUTTON" .. self:GetID()
--- 			elseif command:match("PetActionButton") then
--- 				command = "BONUSACTIONBUTTON" .. self:GetID()
--- 			end
-
--- 		end
-
--- 		keybind:setInfo(self:GetName(), GetBindingKey(command))
-
--- 	end
-
--- 	local onLeave = function(self)
-
--- 		if not bindingActive then
--- 			return
--- 		end
-
--- 		keybind:setInfo("", "")
-
--- 	end
-
--- 	bars.each(function(bar)
-
--- 		for i, button in ipairs(bar.children) do
--- 			button:HookScript("OnEnter", onEnter)
--- 			button:HookScript("OnLeave", onLeave)
--- 		end
-
--- 	end)
-
--- 	bindingActive = true
--- 	keybind:show()
-
--- end
 
 ns.binder = function()
 	slash.register("hb", function()
