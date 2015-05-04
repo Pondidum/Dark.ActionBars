@@ -32,7 +32,7 @@ local bindInfoDisplay = {
 		keys:SetPoint("TOPRIGHT", name, "BOTTOMRIGHT", 0, 0)
 		keys:SetPoint("BOTTOM", bind, "BOTTOM", 0, 0)
 
-		local accept = CreateFrame("Button", "$parentAccept", bind, "ActionButtonTemplate")
+		local accept = CreateFrame("CheckButton", "$parentAccept", bind, "ActionButtonTemplate")
 		accept:SetPoint("TOPLEFT", bind, "BOTTOMLEFT", 0, -6)
 		accept:SetPoint("RIGHT", bind, "CENTER", -3, 0)
 		accept:SetHeight(25)
@@ -48,7 +48,7 @@ local bindInfoDisplay = {
 		accept:SetScript("OnClick", function() this:accept() end)
 
 
-		local cancel = CreateFrame("Button", "$parentCancel", bind, "ActionButtonTemplate")
+		local cancel = CreateFrame("CheckButton", "$parentCancel", bind, "ActionButtonTemplate")
 		cancel:SetPoint("TOPRIGHT", bind, "BOTTOMRIGHT", 0, -6)
 		cancel:SetPoint("LEFT", bind, "CENTER", 3, 0)
 		cancel:SetHeight(25)
